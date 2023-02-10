@@ -11,7 +11,7 @@ on:
     #     required: true
     #     default: '3.96'
 
-permissions: read-all|write-all
+permissions: write-all
 
 jobs:
   release:
