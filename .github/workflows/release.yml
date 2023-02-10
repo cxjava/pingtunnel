@@ -11,6 +11,8 @@ on:
     #     required: true
     #     default: '3.96'
 
+permissions: read-all|write-all
+
 jobs:
   release:
     runs-on: ${{ matrix.os }}
