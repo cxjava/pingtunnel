@@ -11,7 +11,6 @@
 
 Pingtunnel is a tool that advertises tcp/udp/sock5 traffic as icmp traffic for forwarding. Used to break through the network blockade, or to bypass the WIFI network login verification, or speed up network transmission speed on some networks. 
 
-![image](network.jpg)
 
 # Why use this
 * TCP and UDP traffic of some servers are banned and can be bypassed by pingtunnel.
@@ -36,7 +35,6 @@ echo 1> / proc / sys / net / ipv4 / icmp_echo_ignore_all
 * Everything is normal, there will be a ping value on the interface, and then you can click X to hide it in the status bar
 * Set the browser's sock5 proxy to 127.0.0.1:1080, If you do not connect to the Internet, a socks version not supported error log appears, indicating that the browser's proxy is not a socks5 proxy.If it prompts a non-secure connection, it means there is a problem with dns. Check "Use socks5 proxy DNS query" on the browser, or refer to [yellowdns](https://github.com/esrrhs/yellowdns)
 
-![image](qtrun.jpg)
 
 ### Install the client (recommended for high play)
 * Download the corresponding installation package from [releases](https://github.com/esrrhs/pingtunnel/releases), such as pingtunnel_windows64.zip, and decompress it
