@@ -30,9 +30,9 @@ sudo ./pingtunnel -type server
 * 或者用`install.sh`来安装:
 ```shell
 #安装到当前目录的./bin下
-sudo curl https://raw.githubusercontent.com/cxjava/pingtunnel/master/install.sh | sh
+sudo curl https://raw.githubusercontent.com/cxjava/pingtunnel/main/install.sh | sh
 #安装到/usr/local/bin
-sudo curl https://raw.githubusercontent.com/cxjava/pingtunnel/master/install.sh | sh -s -- -b /usr/local/bin
+sudo curl https://raw.githubusercontent.com/cxjava/pingtunnel/main/install.sh | sh -s -- -b /usr/local/bin
 ```
 * (可选)关闭系统默认的ping
 ```
