@@ -1,0 +1,63 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    # inputs:
+    #   upx_version:
+    #     description: 'UPX version'
+    #     required: true
+    #     default: '3.96'
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        go: ['1.20']
+        os: [ubuntu-latest]
+    name: Go ${{ matrix.go }} in ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go }}
+      - name: Environment
+        run: |
+          go version
+          go env
+      
+      # So GoReleaser can generate the changelog properly
+      - name: Unshallowify the repo clone
+        run: git fetch --prune --unshallow
+        
+      - name: Check git tag exist
+        run: |
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          gitTagExists=$(git tag --points-at HEAD)
+          if ! [ -n "$gitTagExists" ]; then
+              echo "no tag, create one."
+              latesttag=$(git describe --tags `git rev-list --tags --max-count=1`)
+              echo "latest tag: ${latesttag}"
+              newtag=$(echo ${latesttag} | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}')
+              echo "new tag: ${newtag}"
+              git tag $newtag
+          fi
+      
+      - name: Set environment variables
+        run: |
+          echo "GOLANG_VERSION=$(go version)" >> $GITHUB_ENV
+          echo "BUILT_BY=$(whoami)@$(hostname)" >> $GITHUB_ENV
+          
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          version: latest
+          args: release --clean --skip-validate --skip-sign --debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOLANG_VERSION: ${{ env.GOLANG_VERSION }}
+          BUILT_BY: ${{ env.BUILT_BY }}
