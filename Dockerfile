@@ -3,6 +3,6 @@ LABEL maintainer="cxjava <cxjava@github.com>"
 
 RUN set -ex \
     && apk add --no-cache tzdata openssl ca-certificates \
-    && curl https://raw.githubusercontent.com/cxjava/pingtunnel/main/install.sh | sh -s -- -b /usr/local/bin
+    && wget -O - https://raw.githubusercontent.com/cxjava/pingtunnel/main/install.sh | sh -s -- -b /usr/local/bin
 
 ENTRYPOINT ["/usr/local/bin/pingtunnel"]
