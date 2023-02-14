@@ -26,7 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DRY_RUN: true
-          INITIAL_VERSION: v2.9.0
+          INITIAL_VERSION: "2.9.0"
           DEFAULT_BUMP: "${{ github.event.inputs.bump_type }}" 
       - name: Bump tag locally
         run: git tag ${{ steps.bumpTag.outputs.new_tag }}
